@@ -44,10 +44,10 @@ require('lazy').setup({
   { 'folke/which-key.nvim', opts = {} },
 
   {
-    'navarasu/onedark.nvim',
+    'sainnhe/everforest',
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'onedark'
+      vim.cmd.colorscheme 'everforest'
     end,
   },
 
