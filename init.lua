@@ -222,7 +222,12 @@ vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { de
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 
-vim.keymap.set('n', '<leader>fb', ':Telescope file_browser<CR>', { noremap = true, desc = 'Open [F]ile [B]rowser' })
+vim.keymap.set(
+  'n',
+  '<leader>fb',
+  require('telescope').extensions.file_browser.file_browser,
+  { path = '%:p:h', select_buffer = true, noremap = true, desc = 'Open [F]ile [B]rowser' }
+)
 
 require('nvim-treesitter.configs').setup {
   ensure_installed = {
