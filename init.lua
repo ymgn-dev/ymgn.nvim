@@ -69,7 +69,7 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = false,
-        theme = 'onedark',
+        theme = 'everforest',
         component_separators = '|',
         section_separators = '',
       },
@@ -84,7 +84,28 @@ require('lazy').setup({
     },
   },
 
-  { 'numToStr/Comment.nvim', opts = {} },
+  {
+    'numToStr/Comment.nvim',
+    opts = {
+      -- add any options here
+    },
+    event = 'VeryLazy',
+  },
+
+  {
+    'kylechui/nvim-surround',
+    version = '*', -- Use for stability; omit to use `main` branch for the latest features
+    event = 'VeryLazy',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-treesitter/nvim-treesitter-textobjects',
+    },
+    config = function()
+      require('nvim-surround').setup {
+        -- Configuration here, or leave empty to use defaults
+      }
+    end,
+  },
 
   {
     'nvim-telescope/telescope.nvim',
