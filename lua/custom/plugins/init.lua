@@ -20,7 +20,7 @@ return {
     },
     version = '^1.0.0', -- optional: only update when a new 1.x version is released
     -- event = 'BufReadPost',
-    event = 'VeryLazy',
+    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
     config = function()
       vim.keymap.set('n', '<Tab>', '<Cmd>BufferNext<CR>', { noremap = true, silent = true })
       vim.keymap.set('n', '<S-Tab>', '<Cmd>BufferPrevious<CR>', { noremap = true, silent = true })
