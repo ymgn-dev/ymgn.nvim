@@ -124,10 +124,16 @@ require('lazy').setup({
 
   {
     'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
+      'JoosepAlviste/nvim-ts-context-commentstring',
     },
-    build = ':TSUpdate',
+    config = function()
+      require('Comment').setup {
+        pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+      }
+    end,
   },
 
   { import = 'core.plugins' },
@@ -195,7 +201,28 @@ vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 
 require('nvim-treesitter.configs').setup {
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim' },
+  ensure_installed = {
+    'c',
+    'cpp',
+    'css',
+    'go',
+    'html',
+    'javascript',
+    'lua',
+    'python',
+    'rust',
+    'scss',
+    'svelte',
+    'tsx',
+    'typescript',
+    'vim',
+    'vimdoc',
+  },
+
+  context_commentstring = {
+    enable = true,
+    enable_autocmd = false,
+  },
 
   auto_install = false,
 
