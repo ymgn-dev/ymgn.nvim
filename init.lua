@@ -155,19 +155,29 @@ require('lazy').setup({
     end,
   },
 
-  -- {
-  --   'mfussenegger/nvim-lint',
-  --   config = function()
-  --     require('lint').linters_by_ft = {
-  --       markdown = { 'vale' },
-  --     }
-  --     vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
-  --       callback = function()
-  --         require('lint').try_lint()
-  --       end,
-  --     })
-  --   end,
-  -- },
+  {
+    'mfussenegger/nvim-lint',
+    event = 'VeryLazy',
+    config = function()
+      require('lint').linters_by_ft = {
+        javascript = { 'eslint_d' },
+        typescript = { 'eslint_d' },
+        javascriptreact = { 'eslint_d' },
+        typescriptreact = { 'eslint_d' },
+        jsx = { 'eslint_d' },
+        tsx = { 'eslint_d' },
+        sh = { 'shellcheck' },
+        sql = { 'sqlfluff' },
+        lua = { 'stylua' },
+      }
+      vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
+        callback = function()
+          require('lint').try_lint()
+        end,
+      })
+      vim.cmd('autocmd BufEnter,BufWritePost,InsertLeave * lua require("lint").try_lint()')
+    end,
+  },
 
   {
     'nvim-telescope/telescope.nvim',
@@ -462,14 +472,14 @@ local on_attach = function(_, bufnr)
 end
 
 local servers = {
-  cspell = {},
-  eslint_d = {},
-  prettier_d = {},
-  prisma_ls = {},
-  shellcheck = {},
-  shfmt = {},
-  sqlfluff = {},
-  stylua = {},
+  codespell = {},
+  -- eslint_d = {},
+  -- prettierd = {},
+  prismals = {},
+  -- shellcheck = {},
+  -- shfmt = {},
+  -- sqlfluff = {},
+  -- stylua = {},
   svelte = {},
   tailwindcss = {},
   tsserver = {},
