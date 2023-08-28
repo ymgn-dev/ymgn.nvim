@@ -14,13 +14,13 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+local opts = {
+  defaults = {
+    lazy = true,
+  },
+}
+
 require('lazy').setup({
-  'tpope/vim-fugitive',
-
-  'tpope/vim-rhubarb',
-
-  'tpope/vim-sleuth',
-
   {
     'neovim/nvim-lspconfig',
     dependencies = {
@@ -42,24 +42,6 @@ require('lazy').setup({
   },
 
   { 'folke/which-key.nvim', opts = {} },
-
-  {
-    'lewis6991/gitsigns.nvim',
-    opts = {
-      signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
-      },
-      on_attach = function(bufnr)
-        vim.keymap.set('n', '<leader>gp', require('gitsigns').prev_hunk, { buffer = bufnr, desc = '[G]o to [P]revious Hunk' })
-        vim.keymap.set('n', '<leader>gn', require('gitsigns').next_hunk, { buffer = bufnr, desc = '[G]o to [N]ext Hunk' })
-        vim.keymap.set('n', '<leader>ph', require('gitsigns').preview_hunk, { buffer = bufnr, desc = '[P]review [H]unk' })
-      end,
-    },
-  },
 
   {
     'navarasu/onedark.nvim',
@@ -117,7 +99,7 @@ require('lazy').setup({
   { import = 'core.plugins' },
 
   { import = 'custom.plugins' },
-}, {})
+}, opts)
 
 vim.o.hlsearch = false
 vim.wo.number = true
