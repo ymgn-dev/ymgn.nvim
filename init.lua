@@ -1,16 +1,16 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system {
+  vim.fn.system({
     'git',
     'clone',
     '--filter=blob:none',
     'https://github.com/folke/lazy.nvim.git',
     '--branch=stable', -- latest stable release
     lazypath,
-  }
+  })
 end
 vim.opt.rtp:prepend(lazypath)
 
@@ -59,14 +59,14 @@ require('lazy').setup({
     'sainnhe/everforest',
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'everforest'
+      vim.cmd.colorscheme('everforest')
     end,
     lazy = false,
   },
 
   {
     'nvim-lualine/lualine.nvim',
-    event = "VeryLazy",
+    event = 'VeryLazy',
     opts = {
       options = {
         icons_enabled = false,
@@ -95,6 +95,38 @@ require('lazy').setup({
   },
 
   {
+    'elentok/format-on-save.nvim',
+    event = 'VeryLazy',
+    config = function()
+      local format_on_save = require('format-on-save')
+      local formatters = require('format-on-save.formatters')
+
+      format_on_save.setup({
+        exclude_path_patterns = {
+          '/node_modules/',
+          '.local/share/nvim/lazy',
+        },
+        formatter_by_ft = {
+          css = formatters.lsp,
+          html = formatters.lsp,
+          javascript = formatters.lsp,
+          json = formatters.lsp,
+          lua = formatters.lsp,
+          markdown = formatters.prettierd,
+          python = formatters.black,
+          scss = formatters.lsp,
+          sh = formatters.shfmt,
+          typescript = formatters.prettierd,
+          typescriptreact = formatters.prettierd,
+          yaml = formatters.lsp,
+
+          svelte = formatters.prettierd,
+        },
+      })
+    end,
+  },
+
+  {
     'kylechui/nvim-surround',
     version = '*', -- Use for stability; omit to use `main` branch for the latest features
     event = 'VeryLazy',
@@ -103,7 +135,7 @@ require('lazy').setup({
       'nvim-treesitter/nvim-treesitter-textobjects',
     },
     config = function()
-      require('nvim-surround').setup {}
+      require('nvim-surround').setup({})
     end,
   },
 
@@ -116,7 +148,7 @@ require('lazy').setup({
         'nvim-telescope/telescope-fzf-native.nvim',
         build = 'make',
         cond = function()
-          return vim.fn.executable 'make' == 1
+          return vim.fn.executable('make') == 1
         end,
       },
     },
@@ -130,9 +162,9 @@ require('lazy').setup({
       'JoosepAlviste/nvim-ts-context-commentstring',
     },
     config = function()
-      require('Comment').setup {
+      require('Comment').setup({
         pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
-      }
+      })
     end,
   },
 
@@ -177,7 +209,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
-require('telescope').setup {
+require('telescope').setup({
   defaults = {
     initial_mode = 'normal',
     mappings = {
@@ -202,7 +234,7 @@ require('telescope').setup {
       },
     },
   },
-}
+})
 
 pcall(require('telescope').load_extension, 'fzf')
 pcall(require('telescope').load_extension, 'file_browser')
@@ -210,10 +242,10 @@ pcall(require('telescope').load_extension, 'file_browser')
 vim.keymap.set('n', '<leader>fo', require('telescope.builtin').oldfiles, { desc = '[F]ind oldfiles' })
 vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, { desc = '[F]ind existing [B]uffers' })
 vim.keymap.set('n', '<leader>/', function()
-  require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+  require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown({
     winblend = 10,
     previewer = false,
-  })
+  }))
 end, { desc = '[/] Fuzzily search in current buffer' })
 
 vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
@@ -234,7 +266,7 @@ vim.keymap.set('n', '<S-Tab>', '<Cmd>BufferPrevious<CR>', { noremap = true, sile
 vim.keymap.set('n', '<Tab>', '<Cmd>BufferNext<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>x', '<Cmd>BufferClose<CR>', { noremap = true, silent = true })
 
-require('nvim-treesitter.configs').setup {
+require('nvim-treesitter.configs').setup({
   ensure_installed = {
     'c',
     'cpp',
@@ -314,7 +346,7 @@ require('nvim-treesitter.configs').setup {
       },
     },
   },
-}
+})
 
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
@@ -376,44 +408,44 @@ require('neodev').setup()
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
-local mason_lspconfig = require 'mason-lspconfig'
+local mason_lspconfig = require('mason-lspconfig')
 
-mason_lspconfig.setup {
+mason_lspconfig.setup({
   ensure_installed = vim.tbl_keys(servers),
-}
+})
 
-mason_lspconfig.setup_handlers {
+mason_lspconfig.setup_handlers({
   function(server_name)
-    require('lspconfig')[server_name].setup {
+    require('lspconfig')[server_name].setup({
       capabilities = capabilities,
       on_attach = on_attach,
       settings = servers[server_name],
       filetypes = (servers[server_name] or {}).filetypes,
-    }
+    })
   end,
-}
+})
 
-local cmp = require 'cmp'
-local luasnip = require 'luasnip'
+local cmp = require('cmp')
+local luasnip = require('luasnip')
 require('luasnip.loaders.from_vscode').lazy_load()
-luasnip.config.setup {}
+luasnip.config.setup({})
 
-cmp.setup {
+cmp.setup({
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body)
     end,
   },
-  mapping = cmp.mapping.preset.insert {
+  mapping = cmp.mapping.preset.insert({
     ['<C-n>'] = cmp.mapping.select_next_item(),
     ['<C-p>'] = cmp.mapping.select_prev_item(),
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete {},
-    ['<CR>'] = cmp.mapping.confirm {
+    ['<C-Space>'] = cmp.mapping.complete({}),
+    ['<CR>'] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
-    },
+    }),
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
@@ -432,9 +464,9 @@ cmp.setup {
         fallback()
       end
     end, { 'i', 's' }),
-  },
+  }),
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
   },
-}
+})
