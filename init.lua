@@ -168,14 +168,15 @@ require('lazy').setup({
         tsx = { 'eslint_d' },
         sh = { 'shellcheck' },
         sql = { 'sqlfluff' },
-        lua = { 'stylua' },
+        -- lua = { 'stylua' },
       }
+      local group = vim.api.nvim_create_augroup('lint_init', {})
       vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
+        group = group,
         callback = function()
           require('lint').try_lint()
         end,
       })
-      vim.cmd('autocmd BufEnter,BufWritePost,InsertLeave * lua require("lint").try_lint()')
     end,
   },
 
@@ -346,27 +347,23 @@ vim.keymap.set('n', '<leader>x', '<Cmd>BufferClose<CR>', { noremap = true, silen
 
 require('nvim-treesitter.configs').setup({
   ensure_installed = {
-    'c',
-    'cpp',
+    'bash',
     'css',
-    'go',
     'html',
     'javascript',
+    'json',
     'lua',
-    'python',
-    'rust',
+    'markdown',
+    'prisma',
     'scss',
+    'sql',
     'svelte',
+    'toml',
     'tsx',
     'typescript',
     'vim',
     'vimdoc',
-    'markdown',
-    'sql',
-    'json',
-    'toml',
     'yaml',
-    'prisma',
   },
 
   context_commentstring = {
@@ -472,23 +469,26 @@ local on_attach = function(_, bufnr)
 end
 
 local servers = {
-  codespell = {},
-  -- eslint_d = {},
-  -- prettierd = {},
-  prismals = {},
-  -- shellcheck = {},
-  -- shfmt = {},
-  -- sqlfluff = {},
-  -- stylua = {},
-  svelte = {},
-  tailwindcss = {},
-  tsserver = {},
+  bashls = {},
+  cssls = {},
+  eslint = {},
+  html = {},
+  jsonls = {},
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },
     },
   },
+  marksman = {},
+  prismals = {},
+  spectral = {},
+  sqlls = {},
+  svelte = {},
+  taplo = {},
+  tailwindcss = {},
+  tsserver = {},
+  yamlls = {},
 }
 
 require('neodev').setup()
