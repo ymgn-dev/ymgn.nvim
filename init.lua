@@ -111,7 +111,7 @@ require('lazy').setup({
           html = formatters.lsp,
           javascript = formatters.lsp,
           json = formatters.lsp,
-          lua = formatters.lsp,
+          lua = formatters.stylua,
           markdown = formatters.prettierd,
           python = formatters.black,
           scss = formatters.lsp,
