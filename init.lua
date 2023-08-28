@@ -224,9 +224,9 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 
 vim.keymap.set(
   'n',
-  '<leader>fb',
+  '<C-n>',
   ':Telescope file_browser path=%:p:h select_buffer=true<CR>',
-  { noremap = true, desc = 'Open [F]ile [B]rowser' }
+  { noremap = true, desc = 'Open file browser' }
 )
 
 vim.keymap.set('n', '<S-Tab>', '<Cmd>BufferPrevious<CR>', { noremap = true, silent = true })
