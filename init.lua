@@ -66,6 +66,7 @@ require('lazy').setup({
 
   {
     'nvim-lualine/lualine.nvim',
+    event = "VeryLazy",
     opts = {
       options = {
         icons_enabled = false,
@@ -78,6 +79,7 @@ require('lazy').setup({
 
   {
     'lukas-reineke/indent-blankline.nvim',
+    event = 'VeryLazy',
     opts = {
       char = '┊',
       show_trailing_blankline_indent = false,
@@ -101,9 +103,7 @@ require('lazy').setup({
       'nvim-treesitter/nvim-treesitter-textobjects',
     },
     config = function()
-      require('nvim-surround').setup {
-        -- Configuration here, or leave empty to use defaults
-      }
+      require('nvim-surround').setup {}
     end,
   },
 
