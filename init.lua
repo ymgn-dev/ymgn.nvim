@@ -169,11 +169,11 @@ require('lazy').setup({
         jsx = { 'eslint_d', 'cspell' },
         tsx = { 'eslint_d', 'cspell' },
         svelte = { 'eslint_d', 'cspell' },
-        json = { 'jsonlint', 'cspell' },
+        json = { 'eslint_d', 'cspell' },
         markdown = { 'markdownlint', 'cspell' },
         sh = { 'shellcheck', 'cspell' },
         sql = { 'sqlfluff', 'cspell' },
-        yaml = { 'yamllint', 'cspell' },
+        yaml = { 'eslint_d', 'cspell' },
         lua = { 'cspell' },
       }
       local group = vim.api.nvim_create_augroup('lint_init', {})
@@ -442,19 +442,15 @@ local non_lsp_ensure_installed = {
   -- Linters
   'cspell',
   'eslint_d',
-  'jsonlint',
   'markdownlint',
   'shellcheck',
   'sqlfluff',
-  'yamllint',
 
   -- formatters
-  -- 'markdownlint', -- prettierdで代用可
   'prettierd',
   'shfmt',
   'stylua',
   'sql-formatter',
-  -- 'yamlfmt', -- prettierdで代用可
 }
 local registry = require('mason-registry')
 for _, pkg_name in ipairs(non_lsp_ensure_installed) do
