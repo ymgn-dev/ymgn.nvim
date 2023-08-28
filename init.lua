@@ -95,6 +95,30 @@ require('lazy').setup({
   },
 
   {
+    'akinsho/toggleterm.nvim',
+    version = '*',
+    event = 'VeryLazy',
+    opts = {
+      -- add any options here
+    },
+    config = function()
+      require('toggleterm').setup({
+        open_mapping = [[<A-i>]],
+        direction = 'float',
+        highlights = {
+          NormalFloat = {
+            guibg = '#122212',
+            guifg = '#FCFCFC',
+          },
+        },
+        float_opts = {
+          border = 'shadow',
+        },
+      })
+    end,
+  },
+
+  {
     'elentok/format-on-save.nvim',
     event = 'VeryLazy',
     config = function()
