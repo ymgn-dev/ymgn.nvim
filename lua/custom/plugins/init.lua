@@ -19,13 +19,6 @@ return {
       -- …etc.
     },
     version = '^1.0.0', -- optional: only update when a new 1.x version is released
-    -- event = 'BufReadPost',
     event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
-    config = function()
-      local map = vim.api.nvim_set_keymap
-      local opts = { noremap = true, silent = true }
-      map('n', '<S-Tab>', '<Cmd>BufferPrevious<CR>', opts)
-      map('n', '<Tab>', '<Cmd>BufferNext<CR>', opts)
-    end,
   },
 }

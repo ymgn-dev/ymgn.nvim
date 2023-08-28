@@ -225,9 +225,12 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 vim.keymap.set(
   'n',
   '<leader>fb',
-  ":Telescope file_browser path=%:p:h select_buffer=true<CR>",
+  ':Telescope file_browser path=%:p:h select_buffer=true<CR>',
   { noremap = true, desc = 'Open [F]ile [B]rowser' }
 )
+
+vim.keymap.set('n', '<S-Tab>', '<Cmd>BufferPrevious<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<Tab>', '<Cmd>BufferNext<CR>', { noremap = true, silent = true })
 
 require('nvim-treesitter.configs').setup {
   ensure_installed = {
