@@ -185,6 +185,35 @@ require('lazy').setup({
   },
 
   {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    opts = {}, -- this is equalent to setup({}) function
+    config = function()
+      require('nvim-autopairs').setup({
+        check_ts = true,
+      })
+    end,
+  },
+
+  {
+    'windwp/nvim-ts-autotag',
+    ft = {
+      'typescriptreact',
+      'javascriptreact',
+      'svelte',
+      'html',
+      'javascript',
+      'typescript',
+      'tsx',
+      'jsx',
+      'markdown',
+    },
+    config = function()
+      require('nvim-ts-autotag').setup()
+    end,
+  },
+
+  {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     dependencies = {
@@ -209,7 +238,7 @@ require('lazy').setup({
   { import = 'custom.plugins' },
 }, opts)
 
-vim.o.hlsearch = false
+vim.o.hlsearch = true
 vim.wo.number = true
 vim.o.mouse = 'a'
 vim.o.clipboard = 'unnamedplus'
@@ -218,6 +247,10 @@ vim.o.undofile = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.wo.signcolumn = 'yes'
+
+vim.opt.expandtab = true
+vim.opt.autoindent = true
+vim.opt.smartindent = true
 
 vim.o.updatetime = 250
 vim.o.timeoutlen = 300
