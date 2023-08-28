@@ -131,19 +131,21 @@ require('lazy').setup({
           '.local/share/nvim/lazy',
         },
         formatter_by_ft = {
-          css = formatters.lsp,
-          html = formatters.lsp,
-          javascript = formatters.lsp,
-          json = formatters.lsp,
+          css = formatters.prettierd,
+          html = formatters.prettierd,
+          javascript = formatters.prettierd,
+          javascriptreact = formatters.prettierd,
+          json = formatters.prettierd,
           lua = formatters.stylua,
           markdown = formatters.prettierd,
-          python = formatters.black,
-          scss = formatters.lsp,
+          scss = formatters.prettierd,
           sh = formatters.shfmt,
+          sql = formatters.shell({ cmd = { 'sql-formatter', '%' } }),
+          svelte = formatters.prettierd,
+          toml = formatters.shell({ cmd = { 'taplo fmt', '%' } }),
           typescript = formatters.prettierd,
           typescriptreact = formatters.prettierd,
-          yaml = formatters.lsp,
-          svelte = formatters.prettierd,
+          yaml = formatters.prettierd,
 
           fallback_formatter = {
             formatters.remove_trailing_whitespace,
@@ -160,15 +162,19 @@ require('lazy').setup({
     event = 'VeryLazy',
     config = function()
       require('lint').linters_by_ft = {
-        javascript = { 'eslint_d' },
-        typescript = { 'eslint_d' },
-        javascriptreact = { 'eslint_d' },
-        typescriptreact = { 'eslint_d' },
-        jsx = { 'eslint_d' },
-        tsx = { 'eslint_d' },
-        sh = { 'shellcheck' },
-        sql = { 'sqlfluff' },
-        -- lua = { 'stylua' },
+        javascript = { 'eslint_d', 'cspell' },
+        typescript = { 'eslint_d', 'cspell' },
+        javascriptreact = { 'eslint_d', 'cspell' },
+        typescriptreact = { 'eslint_d', 'cspell' },
+        jsx = { 'eslint_d', 'cspell' },
+        tsx = { 'eslint_d', 'cspell' },
+        svelte = { 'eslint_d', 'cspell' },
+        json = { 'jsonlint', 'cspell' },
+        markdown = { 'markdownlint', 'cspell' },
+        sh = { 'shellcheck', 'cspell' },
+        sql = { 'sqlfluff', 'cspell' },
+        yaml = { 'yamllint', 'cspell' },
+        lua = { 'cspell' },
       }
       local group = vim.api.nvim_create_augroup('lint_init', {})
       vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
@@ -208,6 +214,7 @@ require('lazy').setup({
 
   {
     'windwp/nvim-ts-autotag',
+    event = 'InsertEnter',
     ft = {
       'typescriptreact',
       'javascriptreact',
@@ -428,6 +435,36 @@ require('nvim-treesitter.configs').setup({
     },
   },
 })
+
+-- Install non-LSP
+-- https://github.com/williamboman/mason-lspconfig.nvim/issues/113
+local non_lsp_ensure_installed = {
+  -- Linters
+  'cspell',
+  'eslint_d',
+  'jsonlint',
+  'markdownlint',
+  'shellcheck',
+  'sqlfluff',
+  'yamllint',
+
+  -- formatters
+  -- 'markdownlint', -- prettierdで代用可
+  'prettierd',
+  'shfmt',
+  'stylua',
+  'sql-formatter',
+  -- 'yamlfmt', -- prettierdで代用可
+}
+local registry = require('mason-registry')
+for _, pkg_name in ipairs(non_lsp_ensure_installed) do
+  local ok, pkg = pcall(registry.get_package, pkg_name)
+  if ok then
+    if not pkg:is_installed() then
+      pkg:install()
+    end
+  end
+end
 
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
