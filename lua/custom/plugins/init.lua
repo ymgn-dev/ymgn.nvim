@@ -22,8 +22,10 @@ return {
     -- event = 'BufReadPost',
     event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
     config = function()
-      vim.keymap.set('n', '<Tab>', '<Cmd>BufferNext<CR>', { noremap = true, silent = true })
-      vim.keymap.set('n', '<S-Tab>', '<Cmd>BufferPrevious<CR>', { noremap = true, silent = true })
+      local map = vim.api.nvim_set_keymap
+      local opts = { noremap = true, silent = true }
+      map('n', '<S-Tab>', '<Cmd>BufferPrevious<CR>', opts)
+      map('n', '<Tab>', '<Cmd>BufferNext<CR>', opts)
     end,
   },
 }
