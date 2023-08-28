@@ -225,7 +225,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 vim.keymap.set(
   'n',
   '<leader>fb',
-  require('telescope').extensions.file_browser.file_browser { path = '%:p:h', select_buffer = true },
+  ":Telescope file_browser path=%:p:h select_buffer=true<CR>",
   { noremap = true, desc = 'Open [F]ile [B]rowser' }
 )
 
