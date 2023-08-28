@@ -179,6 +179,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 require('telescope').setup {
   defaults = {
+    initial_mode = 'normal',
     mappings = {
       i = {
         ['<C-u>'] = false,
