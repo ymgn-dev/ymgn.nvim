@@ -21,4 +21,13 @@ return {
     version = '^1.0.0', -- optional: only update when a new 1.x version is released
     event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
   },
+
+  {
+    'zbirenbaum/copilot.lua',
+    cmd = 'Copilot',
+    event = 'InsertEnter',
+    config = function()
+      require('copilot').setup {}
+    end,
+  },
 }
