@@ -49,6 +49,7 @@ require('lazy').setup({
     config = function()
       vim.cmd.colorscheme 'everforest'
     end,
+    lazy = false,
   },
 
   {
