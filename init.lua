@@ -119,12 +119,31 @@ require('lazy').setup({
           typescript = formatters.prettierd,
           typescriptreact = formatters.prettierd,
           yaml = formatters.lsp,
-
           svelte = formatters.prettierd,
+
+          fallback_formatter = {
+            formatters.remove_trailing_whitespace,
+            formatters.remove_trailing_newlines,
+            formatters.prettierd,
+          },
         },
       })
     end,
   },
+
+  -- {
+  --   'mfussenegger/nvim-lint',
+  --   config = function()
+  --     require('lint').linters_by_ft = {
+  --       markdown = { 'vale' },
+  --     }
+  --     vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
+  --       callback = function()
+  --         require('lint').try_lint()
+  --       end,
+  --     })
+  --   end,
+  -- },
 
   {
     'kylechui/nvim-surround',
@@ -288,6 +307,12 @@ require('nvim-treesitter.configs').setup({
     'typescript',
     'vim',
     'vimdoc',
+    'markdown',
+    'sql',
+    'json',
+    'toml',
+    'yaml',
+    'prisma',
   },
 
   context_commentstring = {
@@ -393,13 +418,17 @@ local on_attach = function(_, bufnr)
 end
 
 local servers = {
-  -- clangd = {},
-  -- gopls = {},
-  -- pyright = {},
-  -- rust_analyzer = {},
-  -- tsserver = {},
-  -- html = { filetypes = { 'html', 'twig', 'hbs'} },
-
+  cspell = {},
+  eslint_d = {},
+  prettier_d = {},
+  prisma_ls = {},
+  shellcheck = {},
+  shfmt = {},
+  sqlfluff = {},
+  stylua = {},
+  svelte = {},
+  tailwindcss = {},
+  tsserver = {},
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
