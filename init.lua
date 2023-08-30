@@ -140,18 +140,18 @@ require('lazy').setup({
           markdown = formatters.prettierd,
           scss = formatters.prettierd,
           sh = formatters.shfmt,
-          sql = formatters.shell({ cmd = { 'sql-formatter', '%' } }),
+          sql = formatters.shell({ cmd = { 'sql-formatter' } }),
           svelte = formatters.prettierd,
-          toml = formatters.shell({ cmd = { 'taplo fmt', '%' } }),
+          -- toml = formatters.shell({ cmd = { 'taplo fmt', '%' } }),
           typescript = formatters.prettierd,
           typescriptreact = formatters.prettierd,
           yaml = formatters.prettierd,
 
-          fallback_formatter = {
-            formatters.remove_trailing_whitespace,
-            formatters.remove_trailing_newlines,
-            formatters.prettierd,
-          },
+          -- fallback_formatter = {
+          --   formatters.remove_trailing_whitespace,
+          --   formatters.remove_trailing_newlines,
+          --   formatters.prettierd,
+          -- },
         },
       })
     end,
@@ -185,6 +185,27 @@ require('lazy').setup({
       })
     end,
   },
+
+  -- {
+  --   'nvimdev/guard.nvim',
+  --   event = 'VeryLazy',
+  --   config = function()
+  --     local ft = require('guard.filetype')
+  --     ft('css,html,javascript,javascriptreact,json,markdown,scss,svelte,typescript,typescriptreact,yaml')
+  --         :fmt('prettierd')
+  --         :lint({ cmd = 'eslint_d', stdin = true })
+  --         :lint({ cmd = 'cspell' })
+  --     ft('lua'):fmt('stylua'):lint({ cmd = 'cspell' })
+  --     ft('sh'):fmt('shfmt'):lint('shellcheck'):lint({ cmd = 'cspell' })
+  --     ft('sql'):fmt('sql-formatter'):lint({ cmd = 'sqlfluff', stdin = true }):lint({ cmd = 'cspell' })
+  --     ft('toml'):fmt({ cmd = 'taplo fmt' }):lint({ cmd = 'cspell' })
+  --
+  --     require('guard').setup({
+  --       fmt_on_save = true,
+  --       lsp_as_default_formatter = true,
+  --     })
+  --   end,
+  -- },
 
   {
     'nvim-telescope/telescope.nvim',
@@ -515,13 +536,13 @@ local servers = {
   },
   marksman = {},
   prismals = {},
-  spectral = {},
+  -- spectral = {},
   sqlls = {},
   svelte = {},
-  taplo = {},
+  -- taplo = {},
   tailwindcss = {},
   tsserver = {},
-  yamlls = {},
+  -- yamlls = {},
 }
 
 require('neodev').setup()
