@@ -1,5 +1,6 @@
-require('config.option')
 require('config.autocmd')
+require('config.keymap')
+require('config.option')
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -15,6 +16,9 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
+  { import = 'plugins.ui' },
+  { import = 'plugins.util' },
+
   {
     'neovim/nvim-lspconfig',
     dependencies = {
@@ -33,83 +37,6 @@ require('lazy').setup({
       'hrsh7th/cmp-nvim-lsp',
       'rafamadriz/friendly-snippets',
     },
-  },
-
-  {
-    'folke/which-key.nvim',
-    event = 'VeryLazy',
-    init = function()
-      vim.o.timeout = true
-      vim.o.timeoutlen = 300
-    end,
-    opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    },
-  },
-
-  {
-    'sainnhe/everforest',
-    priority = 1000,
-    config = function()
-      vim.cmd.colorscheme('everforest')
-    end,
-    lazy = false,
-  },
-
-  {
-    'nvim-lualine/lualine.nvim',
-    event = 'VeryLazy',
-    opts = {
-      options = {
-        icons_enabled = false,
-        theme = 'everforest',
-        component_separators = '|',
-        section_separators = '',
-      },
-    },
-  },
-
-  {
-    'lukas-reineke/indent-blankline.nvim',
-    event = 'VeryLazy',
-    opts = {
-      char = '┊',
-      show_trailing_blankline_indent = false,
-    },
-  },
-
-  {
-    'numToStr/Comment.nvim',
-    opts = {
-      -- add any options here
-    },
-    event = 'VeryLazy',
-  },
-
-  {
-    'akinsho/toggleterm.nvim',
-    version = '*',
-    event = 'VeryLazy',
-    opts = {
-      -- add any options here
-    },
-    config = function()
-      require('toggleterm').setup({
-        open_mapping = [[<A-i>]],
-        direction = 'float',
-        highlights = {
-          NormalFloat = {
-            guibg = '#122212',
-            guifg = '#FCFCFC',
-          },
-        },
-        float_opts = {
-          border = 'shadow',
-        },
-      })
-    end,
   },
 
   {
@@ -154,36 +81,6 @@ require('lazy').setup({
   },
 
   {
-    'windwp/nvim-autopairs',
-    event = 'InsertEnter',
-    opts = {}, -- this is equalent to setup({}) function
-    config = function()
-      require('nvim-autopairs').setup({
-        check_ts = true,
-      })
-    end,
-  },
-
-  {
-    'windwp/nvim-ts-autotag',
-    event = 'InsertEnter',
-    ft = {
-      'typescriptreact',
-      'javascriptreact',
-      'svelte',
-      'html',
-      'javascript',
-      'typescript',
-      'tsx',
-      'jsx',
-      'markdown',
-    },
-    config = function()
-      require('nvim-ts-autotag').setup()
-    end,
-  },
-
-  {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     dependencies = {
@@ -204,10 +101,6 @@ require('lazy').setup({
   },
 
   { import = 'core.plugins' },
-
-  { import = 'custom.plugins' },
-
-  { import = 'plugins/barbar' },
 })
 
 vim.o.hlsearch = true
@@ -230,11 +123,6 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 vim.keymap.set('n', ';', ':')
-
--- vim.keymap.set({ 'n', 'v' }, '<leader>fm', function()
---   require('format-on-save').format()
---   require('format-on-save').restore_cursors()
--- end, { desc = '[F]r[M]at', silent = true })
 
 vim.keymap.set({ 'n', 'v' }, '<leader>fm', '<Cmd>Format<CR>', { desc = '[F]r[M]at', silent = true })
 
@@ -299,10 +187,6 @@ vim.keymap.set(
   ':Telescope file_browser path=%:p:h select_buffer=true<CR>',
   { noremap = true, desc = 'Open file browser' }
 )
-
-vim.keymap.set('n', '<S-Tab>', '<Cmd>BufferPrevious<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<Tab>', '<Cmd>BufferNext<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>x', '<Cmd>BufferClose<CR>', { noremap = true, silent = true })
 
 require('nvim-treesitter.configs').setup({
   ensure_installed = {
