@@ -14,12 +14,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local opts = {
-  defaults = {
-    lazy = true,
-  },
-}
-
 require('lazy').setup({
   {
     'neovim/nvim-lspconfig',
@@ -119,93 +113,30 @@ require('lazy').setup({
   },
 
   {
-    'elentok/format-on-save.nvim',
+    'nvimdev/guard.nvim',
     event = 'VeryLazy',
     config = function()
-      local format_on_save = require('format-on-save')
-      local formatters = require('format-on-save.formatters')
+      local ft = require('guard.filetype')
+      ft('css, html, javascript, javascriptreact, json, scss, svelte, typescript, typescriptreact, yaml')
+          :fmt('prettierd')
+          :lint({ cmd = 'eslint_d', stdin = true })
+          :lint({ cmd = 'cspell', stdin = true })
 
-      format_on_save.setup({
-        exclude_path_patterns = {
-          '/node_modules/',
-          '.local/share/nvim/lazy',
-        },
-        formatter_by_ft = {
-          css = formatters.prettierd,
-          html = formatters.prettierd,
-          javascript = formatters.prettierd,
-          javascriptreact = formatters.prettierd,
-          json = formatters.prettierd,
-          lua = formatters.stylua,
-          markdown = formatters.prettierd,
-          scss = formatters.prettierd,
-          sh = formatters.shfmt,
-          sql = formatters.shell({ cmd = { 'sql-formatter' } }),
-          svelte = formatters.prettierd,
-          -- toml = formatters.shell({ cmd = { 'taplo fmt', '%' } }),
-          typescript = formatters.prettierd,
-          typescriptreact = formatters.prettierd,
-          yaml = formatters.prettierd,
+      ft('lua'):fmt('stylua'):lint({ cmd = 'cspell', stdin = true })
+      ft('markdown')
+          :fmt('prettierd')
+          :lint({ cmd = 'markdownlint', stdin = true })
+          :lint({ cmd = 'cspell', stdin = true })
+      ft('sh'):fmt('shfmt'):lint('shellcheck'):lint({ cmd = 'cspell', stdin = true })
+      ft('sql'):fmt('sql-formatter'):lint({ cmd = 'sqlfluff', stdin = true }):lint({ cmd = 'cspell', stdin = true })
+      ft('toml'):fmt({ cmd = 'taplo', stdin = true }):lint({ cmd = 'cspell', stdin = true })
 
-          -- fallback_formatter = {
-          --   formatters.remove_trailing_whitespace,
-          --   formatters.remove_trailing_newlines,
-          --   formatters.prettierd,
-          -- },
-        },
+      require('guard').setup({
+        fmt_on_save = false,
+        lsp_as_default_formatter = true,
       })
     end,
   },
-
-  {
-    'mfussenegger/nvim-lint',
-    event = 'VeryLazy',
-    config = function()
-      require('lint').linters_by_ft = {
-        javascript = { 'eslint_d', 'cspell' },
-        typescript = { 'eslint_d', 'cspell' },
-        javascriptreact = { 'eslint_d', 'cspell' },
-        typescriptreact = { 'eslint_d', 'cspell' },
-        jsx = { 'eslint_d', 'cspell' },
-        tsx = { 'eslint_d', 'cspell' },
-        svelte = { 'eslint_d', 'cspell' },
-        json = { 'eslint_d', 'cspell' },
-        markdown = { 'markdownlint', 'cspell' },
-        sh = { 'shellcheck', 'cspell' },
-        sql = { 'sqlfluff', 'cspell' },
-        yaml = { 'eslint_d', 'cspell' },
-        lua = { 'cspell' },
-      }
-      local group = vim.api.nvim_create_augroup('lint_init', {})
-      vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
-        group = group,
-        callback = function()
-          require('lint').try_lint()
-        end,
-      })
-    end,
-  },
-
-  -- {
-  --   'nvimdev/guard.nvim',
-  --   event = 'VeryLazy',
-  --   config = function()
-  --     local ft = require('guard.filetype')
-  --     ft('css,html,javascript,javascriptreact,json,markdown,scss,svelte,typescript,typescriptreact,yaml')
-  --         :fmt('prettierd')
-  --         :lint({ cmd = 'eslint_d', stdin = true })
-  --         :lint({ cmd = 'cspell' })
-  --     ft('lua'):fmt('stylua'):lint({ cmd = 'cspell' })
-  --     ft('sh'):fmt('shfmt'):lint('shellcheck'):lint({ cmd = 'cspell' })
-  --     ft('sql'):fmt('sql-formatter'):lint({ cmd = 'sqlfluff', stdin = true }):lint({ cmd = 'cspell' })
-  --     ft('toml'):fmt({ cmd = 'taplo fmt' }):lint({ cmd = 'cspell' })
-  --
-  --     require('guard').setup({
-  --       fmt_on_save = true,
-  --       lsp_as_default_formatter = true,
-  --     })
-  --   end,
-  -- },
 
   {
     'nvim-telescope/telescope.nvim',
@@ -275,7 +206,8 @@ require('lazy').setup({
   { import = 'core.plugins' },
 
   { import = 'custom.plugins' },
-}, opts)
+
+})
 
 vim.o.hlsearch = true
 vim.wo.number = true
@@ -302,10 +234,12 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 vim.keymap.set('n', ';', ':')
 
-vim.keymap.set({ 'n', 'v' }, '<leader>fm', function()
-  require('format-on-save').format()
-  require('format-on-save').restore_cursors()
-end, { desc = '[F]r[M]at', silent = true })
+-- vim.keymap.set({ 'n', 'v' }, '<leader>fm', function()
+--   require('format-on-save').format()
+--   require('format-on-save').restore_cursors()
+-- end, { desc = '[F]r[M]at', silent = true })
+
+vim.keymap.set({ 'n', 'v' }, '<leader>fm', '<Cmd>Format<CR>', { desc = '[F]r[M]at', silent = true })
 
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -471,7 +405,7 @@ local non_lsp_ensure_installed = {
   'prettierd',
   'shfmt',
   'stylua',
-  'sql-formatter',
+  'sqlfmt',
 }
 local registry = require('mason-registry')
 for _, pkg_name in ipairs(non_lsp_ensure_installed) do
