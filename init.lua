@@ -207,6 +207,7 @@ require('lazy').setup({
 
   { import = 'custom.plugins' },
 
+  { import = 'plugins/barbar' },
 })
 
 vim.o.hlsearch = true
