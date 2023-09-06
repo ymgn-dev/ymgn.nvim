@@ -18,6 +18,7 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   { import = 'plugins.ui' },
   { import = 'plugins.util' },
+  { import = 'plugins.extra' },
 
   {
     'neovim/nvim-lspconfig',
@@ -65,41 +66,6 @@ require('lazy').setup({
     end,
   },
 
-  {
-    'nvim-telescope/telescope.nvim',
-    branch = '0.1.x',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        build = 'make',
-        cond = function()
-          return vim.fn.executable('make') == 1
-        end,
-      },
-    },
-  },
-
-  {
-    'nvim-treesitter/nvim-treesitter',
-    build = ':TSUpdate',
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter-textobjects',
-      'JoosepAlviste/nvim-ts-context-commentstring',
-    },
-    config = function()
-      require('Comment').setup({
-        pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
-      })
-    end,
-  },
-
-  {
-    'nvim-telescope/telescope-file-browser.nvim',
-    dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' },
-    event = 'VeryLazy',
-  },
-
   { import = 'core.plugins' },
 })
 
@@ -133,143 +99,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
   group = highlight_group,
   pattern = '*',
-})
-
-require('telescope').setup({
-  defaults = {
-    initial_mode = 'normal',
-    mappings = {
-      i = {
-        ['<C-u>'] = false,
-        ['<C-d>'] = false,
-      },
-    },
-  },
-  extensions = {
-    file_browser = {
-      theme = 'dropdown',
-      -- disables netrw and use telescope-file-browser in its place
-      hijack_netrw = true,
-      mappings = {
-        ['i'] = {
-          -- your custom insert mode mappings
-        },
-        ['n'] = {
-          -- your custom normal mode mappings
-        },
-      },
-    },
-  },
-})
-
-pcall(require('telescope').load_extension, 'fzf')
-pcall(require('telescope').load_extension, 'file_browser')
-
-vim.keymap.set('n', '<leader>fo', require('telescope.builtin').oldfiles, { desc = '[F]ind oldfiles' })
-vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, { desc = '[F]ind existing [B]uffers' })
-vim.keymap.set('n', '<leader>/', function()
-  require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown({
-    winblend = 10,
-    previewer = false,
-  }))
-end, { desc = '[/] Fuzzily search in current buffer' })
-
-vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
-vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = '[F]ind [F]iles' })
-vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = '[F]ind [H]elp' })
-vim.keymap.set('n', '<leader>fcw', require('telescope.builtin').grep_string, { desc = '[F]ind [C]urrent [W]ord' })
-vim.keymap.set('n', '<leader>fw', require('telescope.builtin').live_grep, { desc = '[F]ind by [G]rep' })
-vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { desc = '[F]ind [D]iagnostics' })
-
-vim.keymap.set(
-  'n',
-  '<C-n>',
-  ':Telescope file_browser path=%:p:h select_buffer=true<CR>',
-  { noremap = true, desc = 'Open file browser' }
-)
-
-require('nvim-treesitter.configs').setup({
-  ensure_installed = {
-    'bash',
-    'css',
-    'html',
-    'javascript',
-    'json',
-    'lua',
-    'markdown',
-    'prisma',
-    'scss',
-    'sql',
-    'svelte',
-    'toml',
-    'tsx',
-    'typescript',
-    'vim',
-    'vimdoc',
-    'yaml',
-  },
-
-  context_commentstring = {
-    enable = true,
-    enable_autocmd = false,
-  },
-
-  auto_install = false,
-
-  highlight = { enable = true },
-  indent = { enable = true },
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = '<c-space>',
-      node_incremental = '<c-space>',
-      scope_incremental = '<c-s>',
-      node_decremental = '<M-space>',
-    },
-  },
-  textobjects = {
-    select = {
-      enable = true,
-      lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-      keymaps = {
-        ['aa'] = '@parameter.outer',
-        ['ia'] = '@parameter.inner',
-        ['af'] = '@function.outer',
-        ['if'] = '@function.inner',
-        ['ac'] = '@class.outer',
-        ['ic'] = '@class.inner',
-      },
-    },
-    move = {
-      enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
-      goto_next_start = {
-        [']m'] = '@function.outer',
-        [']]'] = '@class.outer',
-      },
-      goto_next_end = {
-        [']M'] = '@function.outer',
-        [']['] = '@class.outer',
-      },
-      goto_previous_start = {
-        ['[m'] = '@function.outer',
-        ['[['] = '@class.outer',
-      },
-      goto_previous_end = {
-        ['[M'] = '@function.outer',
-        ['[]'] = '@class.outer',
-      },
-    },
-    swap = {
-      enable = true,
-      swap_next = {
-        ['<leader>a'] = '@parameter.inner',
-      },
-      swap_previous = {
-        ['<leader>A'] = '@parameter.inner',
-      },
-    },
-  },
 })
 
 -- Install non-LSP

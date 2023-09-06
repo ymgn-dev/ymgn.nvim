@@ -31,16 +31,6 @@ return {
   },
 
   {
-    'folke/which-key.nvim',
-    event = 'VeryLazy',
-    opts = {},
-    init = function()
-      vim.o.timeout = true
-      vim.o.timeoutlen = 300
-    end,
-  },
-
-  {
     'zbirenbaum/copilot.lua',
     cmd = 'Copilot',
     build = ':Copilot auth',
