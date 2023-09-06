@@ -83,7 +83,7 @@ return {
         end,
       },
     },
-    config = function()
+    init = function()
       require('telescope').setup({
         defaults = {
           initial_mode = 'normal',
@@ -109,21 +109,19 @@ return {
         end,
         desc = '[/] Fuzzily search in current buffer'
       },
-      { '<leader>gf', '<cmd>Telescope git_files<cr>', desc = 'Search [G]it [F]iles' },
+      { '<leader>gf',  '<cmd>Telescope git_files<cr>',   desc = 'Search [G]it [F]iles' },
+      { '<leader>ff',  '<cmd>Telescope find_files<cr>',  desc = '[F]ind [F]iles' },
+      { '<leader>fh',  '<cmd>Telescope help_tags<cr>',   desc = '[F]ind [H]elp' },
+      { '<leader>fcw', '<cmd>Telescope grep_string<cr>', desc = '[F]ind [C]urrent [W]ord' },
+      { '<leader>fw',  '<cmd>Telescope live_grep<cr>',   desc = '[F]ind by [G]rep' },
+      { '<leader>fd',  '<cmd>Telescope diagnostics<cr>', desc = '[F]ind [D]iagnostics' },
+      {
+        '<c-n>',
+        ':Telescope file_browser path=%:p:h select_buffer=true<CR>',
+        noremap = true,
+        desc = 'Open file browser'
+      },
     },
-    -- keys = {
-    --   { '<leader>ff',  require('telescope.builtin').find_files,  desc = '[F]ind [F]iles' },
-    --   { '<leader>fh',  require('telescope.builtin').help_tags,   desc = '[F]ind [H]elp' },
-    --   { '<leader>fcw', require('telescope.builtin').grep_string, desc = '[F]ind [C]urrent [W]ord' },
-    --   { '<leader>fw',  require('telescope.builtin').live_grep,   desc = '[F]ind by [G]rep' },
-    --   { '<leader>fd',  require('telescope.builtin').diagnostics, desc = '[F]ind [D]iagnostics' },
-    --   {
-    --     '<C-n>',
-    --     ':Telescope file_browser path=%:p:h select_buffer=true<CR>',
-    --     noremap = true,
-    --     desc = 'Open file browser'
-    --   },
-    -- },
   },
 
   {
