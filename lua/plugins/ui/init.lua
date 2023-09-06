@@ -1,7 +1,6 @@
 return {
   {
     'sainnhe/everforest',
-    event = 'VeryLazy',
     init = function()
       vim.cmd.colorscheme('everforest')
     end,
@@ -9,7 +8,7 @@ return {
 
   {
     'nvim-lualine/lualine.nvim',
-    event = 'VeryLazy',
+    event = { 'BufReadPost', 'BufAdd' },
     opts = {
       options = {
         theme = 'everforest',
@@ -19,7 +18,7 @@ return {
 
   {
     'lukas-reineke/indent-blankline.nvim',
-    event = { 'BufReadPost', 'BufNewFile' },
+    event = { 'BufReadPost', 'BufAdd' },
     opts = {
       char = '┊',
       show_trailing_blankline_indent = false,
@@ -28,13 +27,13 @@ return {
 
   {
     'romgrk/barbar.nvim',
-    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
+    event = { 'BufReadPost', 'BufAdd' },
     opts = { animation = false },
     dependencies = {
       'lewis6991/gitsigns.nvim',
       'nvim-tree/nvim-web-devicons',
     },
-    init = function()
+    config = function()
       vim.g.barbar_auto_setup = false
     end,
     keys = {
@@ -46,7 +45,8 @@ return {
 
   {
     'akinsho/toggleterm.nvim',
-    event = 'VeryLazy',
+    -- event = 'VeryLazy',
+    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
     opts = {},
     config = function()
       require('toggleterm').setup({
@@ -62,17 +62,15 @@ return {
 
   {
     'folke/which-key.nvim',
-    event = 'VeryLazy',
+    -- event = 'VeryLazy',
+    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
     opts = {},
-    init = function()
-      vim.o.timeout = true
-      vim.o.timeoutlen = 300
-    end,
   },
 
   {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
+    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
     dependencies = {
       'nvim-lua/plenary.nvim',
       {
@@ -82,6 +80,7 @@ return {
           return vim.fn.executable('make') == 1
         end,
       },
+      'nvim-telescope/telescope-file-browser.nvim',
     },
     init = function()
       require('telescope').setup({
@@ -93,6 +92,12 @@ return {
         },
         extensions = {
           file_browser = { theme = 'dropdown', hijack_netrw = true },
+          fzf = {
+            fuzzy = true,
+            override_generic_sorter = true,
+            override_file_sorter = true,
+            case_mode = "smart_case",
+          },
         },
       })
       require('telescope').load_extension('fzf')
@@ -122,12 +127,6 @@ return {
         desc = 'Open file browser'
       },
     },
-  },
-
-  {
-    'nvim-telescope/telescope-file-browser.nvim',
-    dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' },
-    event = 'VeryLazy',
   },
 
   { "nvim-tree/nvim-web-devicons", lazy = true },

@@ -2,7 +2,8 @@ return {
   {
     'numToStr/Comment.nvim',
     opts = {}, -- setup({}) と同等
-    event = 'VeryLazy',
+    -- event = 'VeryLazy',
+    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
   },
 
   {
@@ -50,11 +51,5 @@ return {
         },
       },
     },
-  },
-
-  {
-    'zbirenbaum/copilot-cmp',
-    dependencies = { 'hrsh7th/nvim-cmp' },
-    config = true,
   },
 }

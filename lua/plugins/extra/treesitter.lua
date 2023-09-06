@@ -27,10 +27,10 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
-    event = { "BufReadPost", "BufNewFile" },
+    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
     dependencies = {
-      'nvim-treesitter/nvim-treesitter-textobjects',
-      'JoosepAlviste/nvim-ts-context-commentstring',
+      { 'nvim-treesitter/nvim-treesitter-textobjects', event = { 'BufReadPost', 'BufAdd', 'BufNewFile' } },
+      { 'JoosepAlviste/nvim-ts-context-commentstring', event = { 'BufReadPost', 'BufAdd', 'BufNewFile' } },
     },
     config = function()
       ---@diagnostic disable-next-line: missing-fields
@@ -79,6 +79,7 @@ return {
       })
 
       -- https://github.com/numToStr/Comment.nvim#-hooks
+      ---@diagnostic disable-next-line: missing-fields
       require('Comment').setup({
         pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
       })

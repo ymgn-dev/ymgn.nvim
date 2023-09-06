@@ -52,6 +52,7 @@ end
 return {
   {
     'neovim/nvim-lspconfig',
+    event = 'InsertEnter',
     dependencies = {
       -- https://github.com/williamboman/mason-lspconfig.nvim#setup
       { 'williamboman/mason.nvim',           opts = {} },
@@ -65,7 +66,7 @@ return {
       { '<leader>e', vim.diagnostic.open_float, desc = 'Open floating diagnostic message' },
       { '<leader>q', vim.diagnostic.setloclist, desc = 'Open diagnostics list' },
     },
-    init = function()
+    config = function()
       check_non_lsps_installed()
 
       local on_attach = function(_, bufnr)
@@ -111,11 +112,13 @@ return {
 
   {
     'hrsh7th/nvim-cmp',
+    event = 'InsertEnter',
     dependencies = {
       'L3MON4D3/LuaSnip',
       'saadparwaiz1/cmp_luasnip',
       'hrsh7th/cmp-nvim-lsp',
       'rafamadriz/friendly-snippets',
+      'zbirenbaum/copilot-cmp',
     },
     config = function()
       local cmp = require('cmp')
