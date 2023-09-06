@@ -12,13 +12,13 @@ local mason_lsp_ensure_installed = {
   },
   marksman = {},
   prismals = {},
-  -- spectral = {},
+  spectral = {},
   sqlls = {},
   svelte = {},
-  -- taplo = {},
+  taplo = {},
   tailwindcss = {},
   tsserver = {},
-  -- yamlls = {},
+  yamlls = {},
 }
 
 -- https://github.com/williamboman/mason-lspconfig.nvim/issues/113
