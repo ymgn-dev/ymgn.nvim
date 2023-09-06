@@ -86,10 +86,7 @@ return {
 
         nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
         nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
-
-        vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-          vim.lsp.buf.format()
-        end, { desc = 'Format current buffer with LSP' })
+        nmap('<leader>fm', vim.lsp.buf.format, '[F]or[M]at')
       end
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
