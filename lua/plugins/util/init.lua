@@ -2,7 +2,6 @@ return {
   {
     'numToStr/Comment.nvim',
     opts = {}, -- setup({}) と同等
-    -- event = 'VeryLazy',
     event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
   },
 

@@ -45,7 +45,6 @@ return {
 
   {
     'akinsho/toggleterm.nvim',
-    -- event = 'VeryLazy',
     event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
     opts = {},
     config = function()
@@ -62,7 +61,6 @@ return {
 
   {
     'folke/which-key.nvim',
-    -- event = 'VeryLazy',
     event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
     opts = {},
   },
@@ -70,7 +68,6 @@ return {
   {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
-    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
     dependencies = {
       'nvim-lua/plenary.nvim',
       {
