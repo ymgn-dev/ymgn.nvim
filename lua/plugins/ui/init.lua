@@ -46,7 +46,7 @@ return {
 
   {
     'akinsho/toggleterm.nvim',
-    event = { 'BufAdd', 'BufReadPost' },
+    event = { 'VimEnter' },
     opts = {},
     config = function()
       require('toggleterm').setup({
