@@ -27,10 +27,10 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
-    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
+    event = { 'BufAdd', 'BufReadPost' },
     dependencies = {
-      { 'nvim-treesitter/nvim-treesitter-textobjects', event = { 'BufReadPost', 'BufAdd', 'BufNewFile' } },
-      { 'JoosepAlviste/nvim-ts-context-commentstring', event = { 'BufReadPost', 'BufAdd', 'BufNewFile' } },
+      'nvim-treesitter/nvim-treesitter-textobjects',
+      'JoosepAlviste/nvim-ts-context-commentstring',
     },
     config = function()
       ---@diagnostic disable-next-line: missing-fields

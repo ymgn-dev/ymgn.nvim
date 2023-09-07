@@ -67,8 +67,6 @@ return {
       { '<leader>q', vim.diagnostic.setloclist, desc = 'Open diagnostics list' },
     },
     config = function()
-      check_non_lsps_installed()
-
       local on_attach = function(_, bufnr)
         local nmap = function(keys, func, desc)
           if desc then
@@ -89,6 +87,8 @@ return {
         nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
         nmap('<leader>fm', vim.lsp.buf.format, '[F]or[M]at')
       end
+
+      check_non_lsps_installed()
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)

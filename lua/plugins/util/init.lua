@@ -2,7 +2,7 @@ return {
   {
     'numToStr/Comment.nvim',
     opts = {}, -- setup({}) と同等
-    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
+    event = { 'BufAdd', 'BufReadPost' },
   },
 
   {

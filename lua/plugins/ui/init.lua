@@ -1,14 +1,15 @@
 return {
   {
     'sainnhe/everforest',
-    init = function()
+    event = 'VimEnter',
+    config = function()
       vim.cmd.colorscheme('everforest')
     end,
   },
 
   {
     'nvim-lualine/lualine.nvim',
-    event = { 'BufReadPost', 'BufAdd' },
+    event = { 'BufAdd', 'BufReadPost' },
     opts = {
       options = {
         theme = 'everforest',
@@ -18,7 +19,7 @@ return {
 
   {
     'lukas-reineke/indent-blankline.nvim',
-    event = { 'BufReadPost', 'BufAdd' },
+    event = { 'BufReadPost' },
     opts = {
       char = '┊',
       show_trailing_blankline_indent = false,
@@ -27,7 +28,7 @@ return {
 
   {
     'romgrk/barbar.nvim',
-    event = { 'BufReadPost', 'BufAdd' },
+    event = { 'BufReadPost' },
     opts = { animation = false },
     dependencies = {
       'lewis6991/gitsigns.nvim',
@@ -45,7 +46,7 @@ return {
 
   {
     'akinsho/toggleterm.nvim',
-    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
+    event = { 'BufAdd', 'BufReadPost' },
     opts = {},
     config = function()
       require('toggleterm').setup({
@@ -61,7 +62,7 @@ return {
 
   {
     'folke/which-key.nvim',
-    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
+    event = { 'BufAdd', 'BufReadPost' },
     opts = {},
   },
 
