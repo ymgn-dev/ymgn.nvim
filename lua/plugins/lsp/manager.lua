@@ -38,7 +38,6 @@ local non_lsp_ensure_installed = {
   -- formatters
   'prettierd',
   'shfmt',
-  'sqlfmt',
   'stylua',
 }
 

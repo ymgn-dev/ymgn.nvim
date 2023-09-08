@@ -12,14 +12,14 @@ return {
       local shfmt = require('formatter.filetypes.sh').shfmt
       local taplo = require('formatter.filetypes.toml').taplo
       local prettierd = require('formatter.defaults').prettierd
-      local function sql_formatter()
-        -- https://github.com/sql-formatter-org/sql-formatter
+      local function format_sql()
         return {
-          exe = 'sql-formatter',
+          'sqlfluff',
           args = {
+            'format',
+            '--dialect',
+            'sqlite',
             util.escape_path(util.get_current_buffer_file_path()),
-            '--config',
-            '~/.config/sql-formatter/config.json',
           },
           stdin = true,
         }
@@ -39,7 +39,7 @@ return {
           prisma = {},
           sh = { shfmt },
           svelte = { prettierd },
-          sql = { sql_formatter },
+          sql = { format_sql },
           toml = { taplo },
           typescript = { prettierd },
           typescriptreact = { prettierd },
