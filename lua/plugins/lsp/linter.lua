@@ -1,7 +1,7 @@
 return {
   {
     'mfussenegger/nvim-lint',
-    event = { 'BufAdd', 'BufReadPost' },
+    event = { 'BufReadPost', 'BufEnter' },
     config = function()
       require('lint').linters_by_ft = {
         css = { 'stylelint', 'codespell' },
