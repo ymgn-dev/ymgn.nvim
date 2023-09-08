@@ -1,7 +1,7 @@
 return {
   {
     'mfussenegger/nvim-lint',
-    event = { 'BufNewFile', 'BufReadPost' },
+    event = { 'BufAdd', 'BufReadPost' },
     config = function()
       require('lint').linters_by_ft = {
         css = { 'stylelint', 'codespell' },
@@ -21,7 +21,7 @@ return {
         yaml = { 'yamllint', 'codespell' },
       }
 
-      vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
+      vim.api.nvim_create_autocmd({ 'BufEnter', 'TextChanged' }, {
         callback = function()
           require('lint').try_lint()
         end,
