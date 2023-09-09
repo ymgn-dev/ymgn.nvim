@@ -13,21 +13,27 @@ return {
       local taplo = require('formatter.filetypes.toml').taplo
       local prettierd = require('formatter.defaults').prettierd
       local function format_sql()
+        local sqlfluff_cfg_path = vim.fn.getcwd() .. '/.sqlfluff.cfg'
+
+        if vim.fn.filereadable(vim.fn.expand(sqlfluff_cfg_path)) ~= 1 then
+          sqlfluff_cfg_path = vim.fn.expand('~') .. '/.config/sqlfluff/setup.cfg'
+        end
+
+        print(sqlfluff_cfg_path)
+
         return {
-          'sqlfluff',
+          exe = 'sqlfluff',
           args = {
             'format',
-            '--dialect',
-            'sqlite',
-            util.escape_path(util.get_current_buffer_file_path()),
+            '--config',
+            sqlfluff_cfg_path,
+            '-',
           },
           stdin = true,
         }
       end
 
       require('formatter').setup({
-        logging = true,
-        log_level = vim.log.levels.WARN,
         filetype = {
           css = { prettierd },
           html = { prettierd },
