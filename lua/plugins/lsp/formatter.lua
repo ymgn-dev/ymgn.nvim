@@ -13,7 +13,7 @@ return {
       local function format_sql()
         local sqlfluff_cfg_path = vim.fn.getcwd() .. '/.sqlfluff.cfg'
 
-        if vim.fn.filereadable(vim.fn.expand(sqlfluff_cfg_path)) ~= 1 then
+        if vim.fn.filereadable(sqlfluff_cfg_path) ~= 1 then
           sqlfluff_cfg_path = vim.fn.expand('~') .. '/.config/sqlfluff/setup.cfg'
         end
 
