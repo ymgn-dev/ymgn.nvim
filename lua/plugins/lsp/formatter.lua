@@ -6,8 +6,6 @@ return {
       { '<leader>fm', '<Cmd>FormatWrite<Cr>', desc = '[F]or[M]at', { noremap = true, silent = true } },
     },
     config = function()
-      local util = require('formatter.util')
-
       local stylua = require('formatter.filetypes.lua').stylua
       local shfmt = require('formatter.filetypes.sh').shfmt
       local taplo = require('formatter.filetypes.toml').taplo
@@ -18,8 +16,6 @@ return {
         if vim.fn.filereadable(vim.fn.expand(sqlfluff_cfg_path)) ~= 1 then
           sqlfluff_cfg_path = vim.fn.expand('~') .. '/.config/sqlfluff/setup.cfg'
         end
-
-        print(sqlfluff_cfg_path)
 
         return {
           exe = 'sqlfluff',
