@@ -21,7 +21,7 @@ return {
         yaml = { 'yamllint', 'codespell' },
       }
 
-      vim.api.nvim_create_autocmd({ 'BufEnter', 'TextChanged' }, {
+      vim.api.nvim_create_autocmd({ 'BufEnter', 'TextChanged', 'BufWritePost' }, {
         callback = function()
           require('lint').try_lint()
         end,
