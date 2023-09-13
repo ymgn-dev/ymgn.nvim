@@ -26,7 +26,6 @@ local mason_lsp_ensure_installed = {
 local non_lsp_ensure_installed = {
   -- Linters
   'codespell',
-  'eslint_d',
   'jsonlint',
   'luacheck',
   'markdownlint',
@@ -36,7 +35,6 @@ local non_lsp_ensure_installed = {
   'yamllint',
 
   -- formatters
-  'prettierd',
   'shfmt',
   'stylua',
 }

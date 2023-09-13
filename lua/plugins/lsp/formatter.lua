@@ -9,7 +9,7 @@ return {
       local stylua = require('formatter.filetypes.lua').stylua
       local shfmt = require('formatter.filetypes.sh').shfmt
       local taplo = require('formatter.filetypes.toml').taplo
-      local prettierd = require('formatter.defaults').prettierd
+      local prettier = require('formatter.defaults').prettier
       local function format_sql()
         local sqlfluff_cfg_path = vim.fn.getcwd() .. '/.sqlfluff.cfg'
 
@@ -31,21 +31,21 @@ return {
 
       require('formatter').setup({
         filetype = {
-          css = { prettierd },
-          html = { prettierd },
-          javascript = { prettierd },
-          javascriptreact = { prettierd },
-          json = { prettierd },
+          css = { prettier },
+          html = { prettier },
+          javascript = { prettier },
+          javascriptreact = { prettier },
+          json = { prettier },
           lua = { stylua },
-          markdown = { prettierd },
+          markdown = { prettier },
           prisma = {},
           sh = { shfmt },
-          svelte = { prettierd },
+          svelte = { prettier },
           sql = { format_sql },
           toml = { taplo },
-          typescript = { prettierd },
-          typescriptreact = { prettierd },
-          yaml = { prettierd },
+          typescript = { prettier },
+          typescriptreact = { prettier },
+          yaml = { prettier },
           ['*'] = {
             require('formatter.filetypes.any').remove_trailing_whitespace,
           },

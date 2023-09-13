@@ -6,18 +6,18 @@ return {
       require('lint').linters_by_ft = {
         css = { 'stylelint', 'codespell' },
         html = { 'codespell' },
-        javascript = { 'eslint_d', 'codespell' },
-        javascriptreact = { 'eslint_d', 'codespell' },
+        javascript = { 'eslint', 'codespell' },
+        javascriptreact = { 'eslint', 'codespell' },
         json = { 'jsonlint', 'codespell' },
         lua = { 'luacheck', 'codespell' },
         markdown = { 'markdownlint', 'codespell' },
         prisma = { 'codespell' },
         sh = { 'shellcheck', 'codespell' },
-        svelte = { 'eslint_d', 'codespell' },
+        svelte = { 'eslint', 'codespell' },
         sql = { 'sqlfluff', 'codespell' },
         toml = { 'codespell' },
-        typescript = { 'eslint_d', 'codespell' },
-        typescriptreact = { 'eslint_d', 'codespell' },
+        typescript = { 'eslint', 'codespell' },
+        typescriptreact = { 'eslint', 'codespell' },
         yaml = { 'yamllint', 'codespell' },
       }
 
