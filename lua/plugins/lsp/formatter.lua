@@ -32,28 +32,22 @@ return {
 
       -- プロジェクト直下にprettier設定ファイルがあればPrettierを使用し、ない場合はESLintをフォーマッタとして使用する
       local function format_prettier_or_eslint()
-        local util = require('formatter.util')
-        local cwd = vim.fn.getcwd()
+        local local_prettier = vim.fn.fnamemodify('./node_modules/.bin/prettier', ':p')
+        local local_prettier_stat = vim.loop.fs_stat(local_prettier)
+        local local_eslint = vim.fn.fnamemodify('./node_modules/.bin/eslint', ':p')
+        local local_eslint_stat = vim.loop.fs_stat(local_eslint)
 
-        local prettier_config_path = vim.fn.glob(cwd .. '/.prettier[^i]*')
-        local eslint_config_path = vim.fn.glob(cwd .. '/.eslintrc*')
-
-        if prettier_config_path ~= '' then
+        if local_prettier_stat then
           return prettier
-        elseif eslint_config_path ~= '' then
+        elseif local_eslint_stat then
           return {
             exe = 'npx eslint',
             args = {
-              '--stdin',
-              '--stdin-filename',
-              util.escape_path(util.get_current_buffer_file_path()),
-              '-o',
-              util.escape_path(util.get_current_buffer_file_path()),
+              '--fix',
               '--ext',
               '.' .. vim.fn.expand('%:e'),
             },
-            stdin = true,
-            try_node_modules = true,
+            stdin = false,
           }
         end
         return nil
