@@ -35,6 +35,7 @@ local non_lsp_ensure_installed = {
   'yamllint',
 
   -- formatters
+  'prettier',
   'shfmt',
   'stylua',
 }
