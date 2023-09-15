@@ -93,6 +93,7 @@ return {
           toml = { taplo },
           typescript = { C.prettier_or_eslint },
           typescriptreact = { C.prettier_or_eslint },
+          vue = { C.prettier_or_eslint },
           yaml = { C.npx_prettier },
           ['*'] = {
             require('formatter.filetypes.any').remove_trailing_whitespace,

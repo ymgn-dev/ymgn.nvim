@@ -18,6 +18,7 @@ return {
         toml = { 'codespell' },
         typescript = { 'eslint', 'codespell' },
         typescriptreact = { 'eslint', 'codespell' },
+        vue = { 'eslint', 'codespell' },
         yaml = { 'yamllint', 'codespell' },
       }
 
